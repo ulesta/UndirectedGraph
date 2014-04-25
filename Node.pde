@@ -6,6 +6,7 @@ class Node {
   int r;
   float scaleOffset;
   ArrayList rels;
+  boolean active;
 
   // Constructor
   Node(int xTemp, int yTemp, int rTemp) {
@@ -16,6 +17,7 @@ class Node {
     this.r = rTemp;
     this.scaleOffset = random(750);
     this.rels = new ArrayList();
+    this.active = false;
   }
 
   // Draw method
@@ -27,9 +29,17 @@ class Node {
     
     setX(dx);
     setY(dy);*/
+   
+    // draw node
+    if (active) {
+      fill(0,255,0);
+    } else {
+      fill(255);
+    }
+    //ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
+    ellipse(x, y, r, r);
     
-    fill(255);
-    ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
+     // draw lines between relationships
     for (int i = 0; i < rels.size(); i++) {
       stroke(255);
       Node temp = (Node)(rels.get(i));
@@ -69,6 +79,14 @@ class Node {
   // get radius, if needed
   public void setR(int r) {
     this.r = r;
+  }
+  
+  public void activate() {
+    this.active = true; 
+  }
+  
+  public void deactivate() {
+    this.active = false; 
   }
 }
 
