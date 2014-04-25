@@ -1,13 +1,8 @@
 /**
- * Array. 
+ * UndirectedGraph
  * 
- * An array is a list of data. Each piece of data in an array 
- * is identified by an index number representing its position in 
- * the array. Arrays are zero based, which means that the first 
- * element in the array is [0], the second element is [1], and so on. 
- * In this example, an array named "coswav" is created and
- * filled with the cosine values. This data is displayed three 
- * separate ways on the screen.  
+ * An undirected graph consists of nodes with an arbitrary number
+ * of undirected relationships with other nodes.
  */
  static int MAX_RELS = 2;
  ArrayList nodes;
@@ -29,7 +24,7 @@ void setup() {
   
   Node[] n1rels = {n2, n3};
   Node[] n2rels = {n1, n3};
-  Node[] n3rels = {n2, n1};
+  Node[] n3rels = {n2, n1, n4};
   Node[] n4rels = {n2, n3};
   Node[] n5rels = {n5, n3};
   
@@ -38,6 +33,9 @@ void setup() {
   n3.setRels(n3rels);
   n4.setRels(n4rels);
   n5.setRels(n5rels);
+  
+  
+  n1.setCurrent(true);
   
   nodes.add(n1);
   nodes.add(n2);
@@ -70,13 +68,31 @@ void mouseReleased() {
        if (mX > lowerBoundX &&
            mX < upperBoundX &&
            mY > lowerBoundY &&
-           mY < upperBoundY) {
+           mY < upperBoundY &&
+           temp.isActive()) {
            println("touched!");
-           temp.activate();
+           // find the current node and switch current to the one touched
+           for(int j=0; j < nodes.size(); j++) {
+             Node temp2 = (Node)(nodes.get(j)); 
+             if (temp2.isCurrent()) {
+                temp.setCurrent(true);
+                deactivateAll();
+                temp2.setCurrent(false);
+                
+                break; 
+             }
+           }
        }
        println("Mouse x: " + mouseX + "\tMouse y: " + mouseY);
     }
     
     println("size of nodes: " + nodes.size());
+}
+
+void deactivateAll() {
+   for (int i = 0; i < nodes.size(); i++ ) {
+     Node temp = (Node)(nodes.get(i));
+     temp.deactivate();
+   } 
 }
 

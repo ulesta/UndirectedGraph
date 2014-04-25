@@ -7,6 +7,7 @@ class Node {
   float scaleOffset;
   ArrayList rels;
   boolean active;
+  boolean current;
 
   // Constructor
   Node(int xTemp, int yTemp, int rTemp) {
@@ -18,33 +19,42 @@ class Node {
     this.scaleOffset = random(750);
     this.rels = new ArrayList();
     this.active = false;
+    this.current = false;
   }
 
   // Draw method
   void draw() {
     float m = millis() + scaleOffset;
+    // draw lines between relationships
+    for (int i = 0; i < rels.size(); i++) {
+      stroke(255);
+      Node temp = (Node)(rels.get(i));
+      line(x, y, temp.getX(), temp.getY());
+    }
     
     /*int dx = (int)(this.xInit+(((sin(m/1000)*200))/2));
     int dy = (int)(this.yInit+(((sin(m/1000)*200))/2));
     
     setX(dx);
     setY(dy);*/
+    
+    
    
     // draw node
     if (active) {
-      fill(0,255,0);
+      fill(255,255,0);
+    } else if (current) {
+      fill(0,0,255);
+     for(int i = 0; i < rels.size(); i++) {
+        Node temp = (Node)(rels.get(i));
+        temp.activate();  
+      } 
     } else {
       fill(255);
     }
-    //ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
-    ellipse(x, y, r, r);
+    ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
+    //ellipse(x, y, r, r);
     
-     // draw lines between relationships
-    for (int i = 0; i < rels.size(); i++) {
-      stroke(255);
-      Node temp = (Node)(rels.get(i));
-      line(x, y, temp.getX(), temp.getY());
-    }
   }
 
   // -------  GETTERS
@@ -58,6 +68,14 @@ class Node {
   // get radius, if needed
   public int getR() {
     return this.r;
+  }
+  
+  public boolean isCurrent() {
+     return this.current; 
+  }
+  
+  public boolean isActive() {
+     return this.active; 
   }
 
   // -------  SETTERS
@@ -87,6 +105,10 @@ class Node {
   
   public void deactivate() {
     this.active = false; 
+  }
+  
+  public void setCurrent(boolean b) {
+     this.current = b; 
   }
 }
 
