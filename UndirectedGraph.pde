@@ -46,11 +46,14 @@ void setup() {
 
 void draw() {
   background(0);
-  n1.draw();
-  n2.draw();
-  n3.draw();
-  n4.draw();
-  n5.draw();
+  for (int i = 0; i < nodes.size(); i++ ) {
+     Node temp = (Node)(nodes.get(i));
+     temp.drawRelations();
+   } 
+  for (int i = 0; i < nodes.size(); i++ ) {
+     Node temp = (Node)(nodes.get(i));
+     temp.draw();
+   } 
 }
 
 void mouseReleased() {

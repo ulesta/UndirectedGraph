@@ -22,24 +22,14 @@ class Node {
     this.current = false;
   }
 
-  // Draw method
+  // Draw method -- takes care of drawing the nodes
   void draw() {
     float m = millis() + scaleOffset;
-    // draw lines between relationships
-    for (int i = 0; i < rels.size(); i++) {
-      stroke(255);
-      Node temp = (Node)(rels.get(i));
-      line(x, y, temp.getX(), temp.getY());
-    }
-    
-    /*int dx = (int)(this.xInit+(((sin(m/1000)*200))/2));
+    int dx = (int)(this.xInit+(((sin(m/1000)*200))/2));
     int dy = (int)(this.yInit+(((sin(m/1000)*200))/2));
-    
     setX(dx);
-    setY(dy);*/
-    
-    
-   
+    setY(dy);
+
     // draw node
     if (active) {
       fill(255,255,0);
@@ -53,8 +43,15 @@ class Node {
       fill(255);
     }
     ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
-    //ellipse(x, y, r, r);
-    
+  }
+  
+  // drawRelations method -- takes care of drawing relationships
+  void drawRelations() {
+    for (int i = 0; i < rels.size(); i++) {
+      stroke(255);
+      Node temp = (Node)(rels.get(i));
+      line(x, y, temp.getX(), temp.getY());
+    }
   }
 
   // -------  GETTERS
