@@ -6,11 +6,10 @@
  */
 static int MAX_RELS = 2;
 ArrayList nodes;
-Node n1, n2, n3, n4, n5;
+Node n1, n2, n3, n4, n5, n6;
 // relationships;
 Node current;
 
-Polygon p1, p2;
 Polygon[] polygons;
 
 ArrayList path;
@@ -19,8 +18,8 @@ void setup() {
   size(800, 800);
   background(0);
 
+  // Instantiate our objects
   path = new ArrayList();
-
   nodes = new ArrayList();
 
   n1 = new Node(400, 200, 100, "n1");
@@ -28,17 +27,19 @@ void setup() {
   n3 = new Node(300, 400, 100, "n3");
   n4 = new Node(500, 600, 100, "n4");
   n5 = new Node(200, 600, 100, "n5");
+  n6 = new Node(200, 250, 100, "n6");
 
-  Node[] p1NodeArr = {n1, n2, n3};
-  p1 = new Polygon(p1NodeArr);
+  Polygon p1 = new Polygon(new Node[]{n1, n2, n3});
+  Polygon p2 = new Polygon(new Node[]{n3, n5, n4, n2});
+  Polygon p3 = new Polygon(new Node[]{n6, n1, n3});
   
-  Node[] p2NodeArr = {n3, n5, n4, n2};
-  p2 = new Polygon(p2NodeArr);
-  
-  polygons = new Polygon[]{p1,p2};
-  println("Polygons length: " + polygons.length);
+  polygons = new Polygon[]{p1, p2, p3};
+  //println("Polygons length: " + polygons.length);
+ 
+  // find relationships using polygon
+  findRelsFromPoly();
 
-  Node[] n1rels = {};
+  /*Node[] n1rels = {};
   Node[] n2rels = {n1};
   Node[] n3rels = {n2, n1};
   Node[] n4rels = {n2};
@@ -48,26 +49,25 @@ void setup() {
   n2.setRels(n2rels);
   n3.setRels(n3rels);
   n4.setRels(n4rels);
-  n5.setRels(n5rels);
+  n5.setRels(n5rels);*/
 
   // init values for current node
   n1.setCurrent(true);
   current = n1;
   path.add(n1);
 
-  // Populat nodes
+  // Populate our nodes set
   nodes.add(n1);
   nodes.add(n2);
   nodes.add(n3);
   nodes.add(n4);
   nodes.add(n5);
+  nodes.add(n6);
 
-  println("N1 relationship size: " + n1.getRels().size());
-
+  // debug: println("N1 relationship size: " + n1.getRels().size());
   findAllRelationships();
-
-  println("N1 relationship size: " + n1.getRels().size());
-  println("n1 rels: " + n1.toString() );
+  // debug: println("N1 relationship size: " + n1.getRels().size());
+  // debug: println("n1 rels: " + n1.toString() );
 }
 
 void draw() {
@@ -92,13 +92,6 @@ void draw() {
     Node temp = (Node)(nodes.get(i));
     temp.draw();
   }
-
-  /*print("Path: ");
-  for (int i = 0; i < path.size(); i++ ) {
-    Node temp = (Node)(path.get(i));
-    print(temp.getName() + " ");
-  }
-  print("\n");*/
 }
 
 void mouseReleased() {
@@ -148,7 +141,6 @@ void mouseReleased() {
             }
             p.setVisible(isVisible);
           }
-          
           break;
         }
       }
@@ -163,6 +155,8 @@ void deactivateAll() {
   }
 }
 
+/* in most cases, our nodes are connected on a one-way edge, this methods finds all one-way edges and makes them undirected.
+i.e. a -> b, this method will make it such that a <-> b */
 void findAllRelationships() {
   for (int i = 0; i < nodes.size(); i++) {
     Node target = (Node)(nodes.get(i));
@@ -192,6 +186,21 @@ public void getRelName(Node n) {
   for (int i = 0; i < n.getRels().size(); i++) {
     Node temp = (Node) (n.getRels().get(i));
     System.out.println("Rel with: " + temp.getName());
+  }
+}
+
+/* this method finds all closed relationships of a given polygon
+it connects n to n-1 and the nth elem to the 0th elem of a polygon */
+public void findRelsFromPoly() {
+  for (Polygon p: polygons) {
+    Node[] polyNodes = p.getNodes();
+    for (int i = 1; i < polyNodes.length; i++){
+       polyNodes[i].addRel(polyNodes[i - 1]); 
+       // add the very first node to the relationship of the last node
+       if ( i == polyNodes.length - 1 ) {
+        polyNodes[i].addRel(polyNodes[0]); 
+      }
+    }
   }
 }
 
