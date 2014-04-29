@@ -31,14 +31,14 @@ class Node {
     setY(dy);
 
     // draw node
-    if (active) {
-      fill(255,255,0);
-    } else if (current) {
+    if (current) {
       fill(0,0,255);
-     for(int i = 0; i < rels.size(); i++) {
+     /*for(int i = 0; i < rels.size(); i++) {
         Node temp = (Node)(rels.get(i));
         temp.activate();  
-      } 
+      }*/
+    } else if (active) {
+      fill(255,255,0);
     } else {
       fill(255);
     }
@@ -74,6 +74,10 @@ class Node {
   public boolean isActive() {
      return this.active; 
   }
+  
+  public ArrayList getRels() {
+    return this.rels; 
+  }
 
   // -------  SETTERS
 
@@ -106,6 +110,10 @@ class Node {
   
   public void setCurrent(boolean b) {
      this.current = b; 
+  }
+  
+  public void addRel(Node n) {
+     this.rels.add(n); 
   }
 }
 
