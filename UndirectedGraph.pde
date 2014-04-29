@@ -25,8 +25,8 @@ void setup() {
   Node[] n1rels = {};
   Node[] n2rels = {n1};
   Node[] n3rels = {n2, n1};
-  Node[] n4rels = {n2, n3};
-  Node[] n5rels = {n5, n3};
+  Node[] n4rels = {n2};
+  Node[] n5rels = {n3, n4};
   
   n1.setRels(n1rels);
   n2.setRels(n2rels);
@@ -34,8 +34,8 @@ void setup() {
   n4.setRels(n4rels);
   n5.setRels(n5rels);
   
-  n2.setCurrent(true);
-  current = n2;
+  n1.setCurrent(true);
+  current = n1;
   
   nodes.add(n1);
   nodes.add(n2);
@@ -106,10 +106,7 @@ void mouseReleased() {
              }
            }
        }
-       //println("Mouse x: " + mouseX + "\tMouse y: " + mouseY);
     }
-    
-    //println("size of nodes: " + nodes.size());
 }
 
 void deactivateAll() {
@@ -136,21 +133,8 @@ void findAllRelationships() {
               println(relNode.getName());
               if (relNode.getName().equals(target.getName()) && !target.getRels().contains(candidate)) {
                  target.addRel(candidate);
-                 println("Candidate added successfully");
-                 println("relNode: " + relNode.toString() + "\ttargetNode: " + target.toString());
-                 println("relNode: " + relNode.getName() + "\ttargetNode: " + target.getName());
-                 println("Name is equal? " + relNode.getName().equals(target.getName()));
-                 println("Candidate name " + candidate.getName());
-                 println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-              } else {
-                 println("Candidate not added");
-                 println("relNode: " + relNode.toString() + "\ttargetNode: " + target.toString());
-                 println("relNode: " + relNode.getName() + "\ttargetNode: " + target.getName());
-                 println("Name is equal? " + relNode.getName().equals(target.getName()));
-                 println("Candidate name " + candidate.getName());
               }
            }
-           println("}");
          }
        } 
     }

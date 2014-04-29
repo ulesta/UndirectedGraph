@@ -29,8 +29,8 @@ class Node {
     float m = millis() + scaleOffset;
     int dx = (int)(this.xInit+(((sin(m/1000)*200))/2));
     int dy = (int)(this.yInit+(((sin(m/1000)*200))/2));
-    setX(dx);
-    setY(dy);
+    //setX(dx);
+    //setY(dy);
 
     // draw node
     if (current) {
@@ -45,6 +45,8 @@ class Node {
       fill(255);
     }
     ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
+    fill(0);
+    text(this.name, x, y);
   }
   
   // drawRelations method -- takes care of drawing relationships
