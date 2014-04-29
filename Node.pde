@@ -8,9 +8,11 @@ class Node {
   ArrayList rels;
   boolean active;
   boolean current;
+  String name;
 
   // Constructor
-  Node(int xTemp, int yTemp, int rTemp) {
+  Node(int xTemp, int yTemp, int rTemp, String name) {
+    this.name = name;
     this.x = xTemp;
     this.y = yTemp;
     this.xInit = this.x;
@@ -77,6 +79,20 @@ class Node {
   
   public ArrayList getRels() {
     return this.rels; 
+  }
+  
+  public String toString() {
+     String a = "Node: " + this.name + " { ";
+     for (int i = 0; i < this.rels.size(); i++ ) {
+        Node temp = (Node)(this.rels.get(i));
+        a += temp.name + " ";
+     } 
+     a += "}";
+     return a;
+  }
+  
+  public String getName() {
+    return this.name;
   }
 
   // -------  SETTERS

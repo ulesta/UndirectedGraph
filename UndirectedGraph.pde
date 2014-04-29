@@ -16,14 +16,14 @@ void setup() {
   
   nodes = new ArrayList();
   
-  n1 = new Node(400,200,100);
-  n2 = new Node(600,300,100);
-  n3 = new Node(300,400,100);
-  n4 = new Node(500,600,100);
-  n5 = new Node(200,600,100);
+  n1 = new Node(400,200,100, "n1");
+  n2 = new Node(600,300,100, "n2");
+  n3 = new Node(300,400,100, "n3");
+  n4 = new Node(500,600,100, "n4");
+  n5 = new Node(200,600,100, "n5");
   
-  Node[] n1rels = {n2, n3};
-  Node[] n2rels = {n1, n3};
+  Node[] n1rels = {};
+  Node[] n2rels = {n1};
   Node[] n3rels = {n2, n1};
   Node[] n4rels = {n2, n3};
   Node[] n5rels = {n5, n3};
@@ -34,28 +34,31 @@ void setup() {
   n4.setRels(n4rels);
   n5.setRels(n5rels);
   
-  n3.setCurrent(true);
-  current = n3;
+  n2.setCurrent(true);
+  current = n2;
   
   nodes.add(n1);
   nodes.add(n2);
+  
+  println("picked node: " + ((Node)(nodes.get(0))).getName());
+   println("picked node: " + ((Node)(nodes.get(1))).getName());
   nodes.add(n3);
   nodes.add(n4);
   nodes.add(n5);
   
-  println("N2 relationship size: " + n2.getRels().size());
+  println("N1 relationship size: " + n1.getRels().size());
   
   findAllRelationships();
   
-  println("N2 relationship size: " + n2.getRels().size());
-  
-  
+  println("N1 relationship size: " + n1.getRels().size());
+  println("n1 rels: " + n1.toString() );
+ 
 }
 
 void draw() {
   background(0);
   ArrayList currentRels = current.getRels();
-     println("CurrentRels: " + currentRels.size());
+//     println("CurrentRels: " + currentRels.size());
   for (int i = 0; i < currentRels.size(); i++) {
      Node relNode = (Node)(currentRels.get(i));
      relNode.activate();
@@ -119,20 +122,44 @@ void deactivateAll() {
 void findAllRelationships() {
     for (int i = 0; i < nodes.size(); i++) {
        Node target = (Node)(nodes.get(i));
+       println("target node: " + target.getName());
        for (int j = 0; j < nodes.size(); j++) {
          if (j == i) {
            // do nothing 
          } else {
            Node candidate = (Node)(nodes.get(j));
            ArrayList candidateRels = candidate.getRels();
+           println("Node " + candidate.getName() + " is in relationship with {" );
            for (int k=0; k < candidateRels.size(); k++) {
+              
               Node relNode = (Node)(candidateRels.get(k));
-              if (relNode.equals(target) && !target.getRels().contains(candidate)) {
-                 target.addRel(relNode);
-              } 
+              println(relNode.getName());
+              if (relNode.getName().equals(target.getName()) && !target.getRels().contains(candidate)) {
+                 target.addRel(candidate);
+                 println("Candidate added successfully");
+                 println("relNode: " + relNode.toString() + "\ttargetNode: " + target.toString());
+                 println("relNode: " + relNode.getName() + "\ttargetNode: " + target.getName());
+                 println("Name is equal? " + relNode.getName().equals(target.getName()));
+                 println("Candidate name " + candidate.getName());
+                 println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+              } else {
+                 println("Candidate not added");
+                 println("relNode: " + relNode.toString() + "\ttargetNode: " + target.toString());
+                 println("relNode: " + relNode.getName() + "\ttargetNode: " + target.getName());
+                 println("Name is equal? " + relNode.getName().equals(target.getName()));
+                 println("Candidate name " + candidate.getName());
+              }
            }
+           println("}");
          }
        } 
+    }
+}
+
+public void getRelName(Node n) {
+    for(int i = 0; i < n.getRels().size(); i++) {
+       Node temp = (Node) (n.getRels().get(i));
+       System.out.println("Rel with: " + temp.getName()); 
     }
 }
 
