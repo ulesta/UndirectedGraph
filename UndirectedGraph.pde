@@ -6,7 +6,7 @@
  */
 static int MAX_RELS = 2;
 ArrayList nodes;
-Node n1, n2, n3, n4, n5, n6;
+Node n1, n2, n3, n4, n5, n6, n7, n8, n9;
 // relationships;
 Node current;
 
@@ -28,12 +28,16 @@ void setup() {
   n4 = new Node(500, 600, 100, "n4");
   n5 = new Node(200, 600, 100, "n5");
   n6 = new Node(200, 250, 100, "n6");
+  n7 = new Node(200, 100, 100, "n7");
+  n8 = new Node(100, 100, 100, "n8");
+  n9 = new Node(100, 200, 100, "n9");
 
   Polygon p1 = new Polygon(new Node[]{n1, n2, n3});
   Polygon p2 = new Polygon(new Node[]{n3, n5, n4, n2});
   Polygon p3 = new Polygon(new Node[]{n6, n1, n3});
+  Polygon p4 = new Polygon(new Node[]{n8, n7, n9});
   
-  polygons = new Polygon[]{p1, p2, p3};
+  polygons = new Polygon[]{p1, p2, p3, p4};
   //println("Polygons length: " + polygons.length);
  
   // find relationships using polygon
@@ -50,6 +54,9 @@ void setup() {
   n3.setRels(n3rels);
   n4.setRels(n4rels);
   n5.setRels(n5rels);*/
+  
+  // add any non-polygonal relationships
+  n9.addRel(n5);
 
   // init values for current node
   n1.setCurrent(true);
@@ -63,6 +70,10 @@ void setup() {
   nodes.add(n4);
   nodes.add(n5);
   nodes.add(n6);
+  nodes.add(n7);
+  nodes.add(n8);
+  nodes.add(n9);
+
 
   // debug: println("N1 relationship size: " + n1.getRels().size());
   findAllRelationships();
