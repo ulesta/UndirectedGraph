@@ -11,7 +11,7 @@ class Node {
   String name;
 
   // Constructor
-  Node(int xTemp, int yTemp, int rTemp, String name) {
+  public Node(int xTemp, int yTemp, int rTemp, String name) {
     this.name = name;
     this.x = xTemp;
     this.y = yTemp;
@@ -27,32 +27,39 @@ class Node {
   // Draw method -- takes care of drawing the nodes
   void draw() {
     float m = millis() + scaleOffset;
-    int dx = (int)(this.xInit+(((sin(m/1000)*200))/2));
-    int dy = (int)(this.yInit+(((sin(m/1000)*200))/2));
+    int dx = (int)(this.xInit+(((sin(m/2000)*200))/2));
+    int dy = (int)(this.yInit+(((sin(m/2000)*200))/2));
     //setX(dx);
     //setY(dy);
 
     // draw node
     if (current) {
-      fill(0,0,255);
+      stroke(0, 223, 179);
+      strokeWeight(8);
+      fill(0);
      /*for(int i = 0; i < rels.size(); i++) {
         Node temp = (Node)(rels.get(i));
         temp.activate();  
       }*/
     } else if (active) {
-      fill(255,255,0);
+      noStroke();
+      fill(0, 223, 179);
     } else {
+      strokeWeight(1);
       fill(255);
+      stroke(88,88,88);
     }
-    ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
+//    ellipse(x, y, r*(((sin(m/500)*0.5)+1.5)/2), r*(((sin(m/500)*0.5)+1.5)/2));
+    ellipse(x, y, r, r);
     fill(0);
-    text(this.name, x, y);
+    text(this.name, x-7, y+3);
   }
   
   // drawRelations method -- takes care of drawing relationships
   void drawRelations() {
     for (int i = 0; i < rels.size(); i++) {
-      stroke(255);
+      stroke(88,88,88);
+      strokeWeight(1);
       Node temp = (Node)(rels.get(i));
       line(x, y, temp.getX(), temp.getY());
     }
