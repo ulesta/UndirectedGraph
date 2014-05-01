@@ -6,30 +6,22 @@
  */
 
 ArrayList nodes;
-Node n1, n2, n3, n4, n5, n6, n7;
+ArrayList path;
 
-// relationships;
+Player player;
+
+Node n1, n2, n3, n4, n5, n6, n7, n8, n9, n10;
 Node current;
 
 Polygon[] polygons;
 
-ArrayList path;
-
 int currentScreen;
-Player player;
 
-<<<<<<< HEAD
 // images
 PImage imgForP1;
 
 void setup() {
-  size(1980, 1080, P2D);
-=======
-PImage mom, imgStart, duongFamily;
-
-void setup() {
-  size(1980, 1080);
->>>>>>> 64ca565e80b25210777a1b8d6bedf3a7636be627
+size(1980, 1080, P2D);
   background(255);
   // Instantiate our objects
   path = new ArrayList();
@@ -38,7 +30,6 @@ void setup() {
   n1 = new Node(400, 200, 40, "n1");
   n2 = new Node(600, 300, 40, "n2");
   n3 = new Node(300, 400, 40, "n3");
-<<<<<<< HEAD
   n4 = new Node(500, 600, 40, "n4");
   n5 = new Node(200, 600, 40, "n5");
   n6 = new Node(200, 250, 40, "n6");
@@ -52,49 +43,15 @@ void setup() {
   Polygon p3 = new Polygon(new Node[]{n6, n1, n3},  loadImage("2.jpg"));
   Polygon p4 = new Polygon(new Node[]{n8, n7, n9, n10},  loadImage("3.jpg"));
   
-  
   polygons = new Polygon[]{p1, p2, p3, p4};
-  
-=======
-  n4 = new Node((int)random(width), (int)random(height), 40, "n4");
-  n5 = new Node((int)random(width), (int)random(height), 40, "n5");
-  n6 = new Node((int)random(width), (int)random(height), 40, "n6");
-  n7 = new Node((int)random(width), (int)random(height), 40, "n7");
 
-
-  imgStart = loadImage("1975.png");
-  duongFamily = loadImage("duong_family.png");
-  mom = loadImage("mom.png");
-
-  Polygon p1 = new Polygon(new Node[]{n1, n2, n3}, duongFamily);
-  Polygon p2 = new Polygon(new Node[]{n4, n5, n6, n7}, mom); 
-
-  polygons = new Polygon[] {p1, p2};
-
->>>>>>> 64ca565e80b25210777a1b8d6bedf3a7636be627
   player = new Player();
-
-  //println("Polygons length: " + polygons.length);
 
   // find relationships using polygon
   findRelsFromPoly();
 
-  /*Node[] n1rels = {};
-   Node[] n2rels = {n1};
-   Node[] n3rels = {n2, n1};
-   Node[] n4rels = {n2};
-   Node[] n5rels = {n3, n4};
-   
-   n1.setRels(n1rels);
-   n2.setRels(n2rels);
-   n3.setRels(n3rels);
-   n4.setRels(n4rels);
-   n5.setRels(n5rels);*/
-
   // add forced relationship
-  n3.addRel(n4);
-
-
+  n4.addRel(n8);
 
   // init values for current node
   n1.setCurrent(true);
@@ -109,6 +66,9 @@ void setup() {
   nodes.add(n5);
   nodes.add(n6);
   nodes.add(n7);
+  nodes.add(n8);
+  nodes.add(n9);
+  nodes.add(n10);
 
   // debug: println("N1 relationship size: " + n1.getRels().size());
   findAllRelationships();
@@ -126,14 +86,8 @@ void draw() {
     relNode.activate();
   }
   // draw polygons
-<<<<<<< HEAD
-  
   for (int i = polygons.length - 1; i >= 0; i--) {
     polygons[i].draw(); 
-=======
-  for (Polygon p : polygons) {
-s
->>>>>>> 64ca565e80b25210777a1b8d6bedf3a7636be627
   }
   
   // draw relation lines
@@ -165,18 +119,15 @@ s
     break;
   }
 
-<<<<<<< HEAD
   if (allNodesVisited()) {
     currentScreen ++;
   }
   //println("all visited? " + allNodesVisited() + currentScreen );
-=======
   //  if (allNodesVisited()) {
   //    currentScreen ++;
   //  }
 
   println("all visited? " + allNodesVisited() + currentScreen );
->>>>>>> 64ca565e80b25210777a1b8d6bedf3a7636be627
 }
 
 void mouseReleased() {

@@ -1,6 +1,5 @@
 class Polygon {
   Node[] nodes;
-<<<<<<< HEAD
   boolean isVisible;
   PImage srcImg, finalImg;
   PGraphics mask;
@@ -16,40 +15,12 @@ class Polygon {
     calcPolygonMid();
     println("Mid point of polygon: " + this.midX + ", " + this.midY);
     createMask();
-=======
-  PImage image;
-  boolean isVisible;
-  PGraphics msk;
-  
-  // Constructor
-  // Why is this public while the node constructor isn't?
-  public Polygon(Node[] nodes, PImage imageTemp) {
-    this.nodes = nodes;
-    this.image = imageTemp;
-    msk();
-    image.blend(msk,0,0,image.width,image.height,0,0,image.width,image.height,ADD);
->>>>>>> 64ca565e80b25210777a1b8d6bedf3a7636be627
   }
-
 
   public void draw() {
     if (isVisible) {
-<<<<<<< HEAD
       image(finalImg, 0, 0);
     }
-=======
-//     fill(102);
-     image(image,0,0);
-//     beginShape();
-//     for(int i = 0; i < nodes.length; i++ ){
-       // this draws the masked image but not at where I want them to be
-//         image(image,nodes[i].getX(),nodes[i].getY());
-//     }
-//     endShape();
-    }
-    // this image is placed at 0,0, and can only be masked once
-   
->>>>>>> 64ca565e80b25210777a1b8d6bedf3a7636be627
   }
 
   public void calcPolygonMid() {
@@ -105,15 +76,11 @@ class Polygon {
   public Node[] getNodes() {
     return this.nodes;
   }
-<<<<<<< HEAD
 
   int getWidth() {
     return srcImg.width;
   }
-
-=======
   
->>>>>>> 64ca565e80b25210777a1b8d6bedf3a7636be627
   // SETTERS
 
   public void setVisible(boolean b) {
